@@ -1,0 +1,11 @@
+#!/bin/bash
+
+folder="static/cards/"
+
+for svg_file in "$folder"/*.svg; do
+	filename=$(basename "$svg_file" .svg)
+
+	inkscape "$svg_file" --export-filename="$folder/$filename.png"
+	echo "Converted: $filename"
+
+done
