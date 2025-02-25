@@ -25,6 +25,7 @@ class Card:
         self.rank = rank
         path = os.path.join('static', 'cards', f'{suit}_{rank}.png')
         self.img = pygame.image.load(path)
+        self.img = pygame.transform.scale(self.img, (117, 167))
 
     def to_string(self):
         return f'[{self.suit}, {self.rank}]'
