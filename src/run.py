@@ -1,6 +1,6 @@
 import pygame
 from button import Button
-from blackjack_sim import play_blackjack
+from blackjack import play_blackjack
 
 FELT_COLOR = (53, 101, 77)
 SCREEN_WIDTH = 1280
@@ -27,11 +27,13 @@ def handle_click(buttons, screen):
         if button.isHovering(pygame.mouse.get_pos()):
             match mode:
                 case "Blackjack":
-                    play_blackjack(screen)
+                    if not play_blackjack(screen):
+                        return False
                     return True
                 case "Quit":
                     return False
 
+    return True
 
 def main():
     # pygame setup

@@ -19,6 +19,11 @@ class Deck:
         else:
             return None
 
+    def get_backwards_card(self):
+        path = os.path.join('static', 'cards', 'blue2.png')
+        img = pygame.image.load(path)
+        return pygame.transform.scale(img, (117, 167))
+
 class Card:
     def __init__(self, suit, rank):
         self.suit = suit

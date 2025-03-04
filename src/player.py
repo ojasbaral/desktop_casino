@@ -46,6 +46,9 @@ class Dealer(Player):
                 res.append(card.to_string())
 
         return res
+    
+    def get_backwards_card_img(self):
+        return self.deck.get_backwards_card()
 
 class Gambler(Player):
     def __init__(self):
@@ -67,7 +70,7 @@ class Gambler(Player):
 
     def playing(self):
         total = self.total()
-        if total > 21 or self.is_stand:
+        if total >= 21 or self.is_stand:
             return False
 
         return True
