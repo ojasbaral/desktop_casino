@@ -43,7 +43,6 @@ def main():
     pygame.display.set_caption("Menu")
     running = True
     font = pygame.font.Font('./static/fonts/Born2bSportyFS.otf', 60)
-    quit_index = len(GAME_MODES) - 1
     buttons = display_modes(GAME_MODES, screen)
 
     while running:

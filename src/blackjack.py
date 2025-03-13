@@ -2,6 +2,7 @@ import pygame
 from deck import Deck
 from player import Gambler, Dealer
 import time
+from button import Button
 
 # cards scale will be 117 x 166.5
 
@@ -24,8 +25,9 @@ def print_hands(dealer, gambler, screen, gambler_turn):
     for x in range(len(gambler_hand)):
         screen.blit(gambler_hand[x].img, (gambler_xcoords[x], 493))
 
-def print_ui(screen):
+def print_ui(screen, gambler):
     font = pygame.font.Font('./static/fonts/Born2bSportyFS.otf', 60)
+    smaller_font = pygame.font.Font('./static/fonts/Born2bSportyFS.otf', 30)
     dealer_text = font.render("Dealer's Hand", True, 'white')
     screen.blit(dealer_text, ((SCREEN_WIDTH - dealer_text.get_width()) // 2, 10))
     gambler_text = font.render("Your Hand", True, 'white')
@@ -41,7 +43,7 @@ def initial_deal(dealer, gambler, screen):
                 return False;
 
         screen.fill(FELT_COLOR)
-        print_ui(screen)
+        print_ui(screen, gambler)
         xcoords = get_cards_xcoords(2)
         for x in range(i+1):
             ycoord = 80 if x % 2 == 1 else 493
@@ -71,7 +73,7 @@ def gambler_turn(dealer, gambler, screen):
                     time.sleep(1)
 
         screen.fill(FELT_COLOR)
-        print_ui(screen)
+        print_ui(screen, gambler)
         xcoords = get_cards_xcoords(len(gambler.hand))
         instructions = font.render("hit (h) or stand (s)", True, 'white')
         screen.blit(instructions, ((xcoords[0] - instructions.get_width() - 10), 558))
@@ -85,7 +87,7 @@ def gambler_turn(dealer, gambler, screen):
 def dealer_flip(dealer, gambler, screen):
     pygame.display.set_caption("Gambler Turn")
     screen.fill(FELT_COLOR)
-    print_ui(screen)
+    print_ui(screen, gambler)
     print_hands(dealer, gambler, screen, False)
     pygame.display.flip()
     time.sleep(1)
@@ -98,7 +100,7 @@ def dealer_turn(dealer, gambler, screen):
                 return False;
 
         screen.fill(FELT_COLOR)
-        print_ui(screen)
+        print_ui(screen, gambler)
         dealer.deal(dealer)
 
         print_hands(dealer, gambler, screen, False)
@@ -132,7 +134,7 @@ def display_winner(dealer, gambler, screen, result):
         screen.blit(opt_text, ((SCREEN_WIDTH - opt_text.get_width()) // 2, h + 55))
 
 
-        print_ui(screen)
+        print_ui(screen, gambler)
         print_hands(dealer, gambler, screen, False)
 
         pygame.display.flip()
@@ -144,7 +146,9 @@ def get_cards_xcoords(n, card_width=117, margin_width=10):
     start_x = center_x - total_card_width // 2
     return [start_x + i * (card_width+margin_width) for i in range(n)]
 
-def play_blackjack(screen):
+def play_blackjack():
+    pygame.init()
+    screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
     dealer = Dealer(Deck())
     gambler = Gambler()
 
@@ -180,4 +184,7 @@ def play_blackjack(screen):
     res = display_winner(dealer, gambler, screen, result)
     if res == 0: return False
     elif res == 1: return True
-    elif res == 2: return play_blackjack(screen)
+    elif res == 2: return play_blackjack()
+
+if __name__ == '__main__':
+    play_blackjack()
