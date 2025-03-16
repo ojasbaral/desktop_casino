@@ -25,7 +25,7 @@ def print_hands(dealer, gambler, screen, gambler_turn):
     for x in range(len(gambler_hand)):
         screen.blit(gambler_hand[x].img, (gambler_xcoords[x], 493))
 
-def print_ui(screen, gambler):
+def print_ui(screen):
     font = pygame.font.Font('./static/fonts/Born2bSportyFS.otf', 60)
     smaller_font = pygame.font.Font('./static/fonts/Born2bSportyFS.otf', 30)
     dealer_text = font.render("Dealer's Hand", True, 'white')
@@ -43,7 +43,7 @@ def initial_deal(dealer, gambler, screen):
                 return False;
 
         screen.fill(FELT_COLOR)
-        print_ui(screen, gambler)
+        print_ui(screen)
         xcoords = get_cards_xcoords(2)
         for x in range(i+1):
             ycoord = 80 if x % 2 == 1 else 493
@@ -73,7 +73,7 @@ def gambler_turn(dealer, gambler, screen):
                     time.sleep(1)
 
         screen.fill(FELT_COLOR)
-        print_ui(screen, gambler)
+        print_ui(screen)
         xcoords = get_cards_xcoords(len(gambler.hand))
         instructions = font.render("hit (h) or stand (s)", True, 'white')
         screen.blit(instructions, ((xcoords[0] - instructions.get_width() - 10), 558))
@@ -87,7 +87,7 @@ def gambler_turn(dealer, gambler, screen):
 def dealer_flip(dealer, gambler, screen):
     pygame.display.set_caption("Gambler Turn")
     screen.fill(FELT_COLOR)
-    print_ui(screen, gambler)
+    print_ui(screen)
     print_hands(dealer, gambler, screen, False)
     pygame.display.flip()
     time.sleep(1)
@@ -100,7 +100,7 @@ def dealer_turn(dealer, gambler, screen):
                 return False;
 
         screen.fill(FELT_COLOR)
-        print_ui(screen, gambler)
+        print_ui(screen)
         dealer.deal(dealer)
 
         print_hands(dealer, gambler, screen, False)
@@ -134,7 +134,7 @@ def display_winner(dealer, gambler, screen, result):
         screen.blit(opt_text, ((SCREEN_WIDTH - opt_text.get_width()) // 2, h + 55))
 
 
-        print_ui(screen, gambler)
+        print_ui(screen)
         print_hands(dealer, gambler, screen, False)
 
         pygame.display.flip()
